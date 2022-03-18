@@ -43,9 +43,16 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(Task $task)
     {
-        //
+        $validatedAttributes = request()->validate([
+            'description' => 'required',
+        ]);
+
+        $task->update($validatedAttributes);
+
+        //return redirect()->route('tasks.index');
+        return redirect('/tasks');
     }
 
     public function destroy(Task $task)

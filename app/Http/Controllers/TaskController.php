@@ -36,9 +36,16 @@ class TaskController extends Controller
      * @param  \App\Http\Requests\StoreTaskRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTaskRequest $request)
+    public function store()
     {
-        //
+        $validatedAttributes = request()->validate([
+            'description' => 'required',
+        ]);
+
+        Task::create($validatedAttributes);
+
+        //return redirect()->route('tasks.index');
+        return redirect('/tasks');
     }
 
     /**

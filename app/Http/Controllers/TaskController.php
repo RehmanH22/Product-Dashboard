@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -61,5 +60,16 @@ class TaskController extends Controller
 
         //return redirect()->route('tasks.index');
         return redirect('/tasks');
+    }
+
+    public function search(Request $request)
+    {
+        $search_text = $request->get('query');
+
+        $tasks = Task::where('id', 'like', '%' . $search_text . '%')
+            ->orWhere('description', 'LIKE', '%'.$search_text.'%')
+            ->get();
+
+        return view('tasks.search', compact('tasks'));
     }
 }

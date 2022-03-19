@@ -21,9 +21,19 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(StoreProductRequest $request)
+    public function store()
     {
-        //
+        $validatedAttributes = request()->validate([
+            'type' => 'required',
+            'title' => 'required',
+            'author' => 'required',
+            'other' => 'required|numeric',
+            'price' => 'required|numeric',
+        ]);
+
+        Product::create($validatedAttributes);
+
+        return redirect('/products');
     }
 
     public function show(Product $product)
@@ -36,9 +46,20 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Product $product)
     {
-        //
+        //dd($product);
+        $validatedAttributes = request()->validate([
+            'type' => 'required',
+            'title' => 'required',
+            'author' => 'required',
+            'other' => 'required|numeric',
+            'price' => 'required|numeric',
+        ]);
+
+        $product->update($validatedAttributes);
+
+        return redirect('/products');
     }
 
     public function destroy(Product $product)

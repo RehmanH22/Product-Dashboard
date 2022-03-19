@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+//Task Routes
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::post('/tasks', [TaskController::class, 'store']);
 Route::get('/tasks/show/{task}', [TaskController::class, 'show']);
@@ -31,6 +32,7 @@ Route::put('/tasks/{task}', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 Route::get('/search/tasks', [TaskController::class, 'search']);
 
+//Product Routes with authentication verification
 Route::middleware(['auth:sanctum', 'verified'])->get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'store']);
 Route::get('/products/show/{product}', [ProductController::class, 'show']);

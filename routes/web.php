@@ -30,3 +30,12 @@ Route::get('/tasks/edit/{task}', [TaskController::class, 'edit']);
 Route::put('/tasks/{task}', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
 Route::get('/search/tasks', [TaskController::class, 'search']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products/show/{product}', [ProductController::class, 'show']);
+Route::get('/products/create', [ProductController::class, 'create']);
+Route::get('/products/edit/{product}', [ProductController::class, 'edit']);
+Route::put('/products/{product}', [ProductController::class, 'update']);
+Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+Route::get('/search/products', [ProductController::class, 'search']);

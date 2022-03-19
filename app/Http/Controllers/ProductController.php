@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -67,5 +66,18 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect('/products');
+    }
+
+    public function search(Request $request)
+    {
+        $search_text = $request->get('query');
+
+        $products = Product::where('id', 'LIKE', '%' . $search_text . '%')
+            ->orWhere('type', 'like', '%' . $search_text . '%')
+            ->orWhere('title', 'like', '%' . $search_text . '%')
+            ->orWhere('author', 'like', '%' . $search_text . '%')
+            ->get();
+
+        return view('products.search', compact('products'));
     }
 }
